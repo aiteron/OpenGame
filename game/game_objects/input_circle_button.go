@@ -1,0 +1,36 @@
+embedded_components {
+  id: "sprite"
+  type: "sprite"
+  data: "default_animation: \"input_letter_bg\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/resources/game.atlas\"\n"
+  "}\n"
+  ""
+}
+embedded_components {
+  id: "label"
+  type: "label"
+  data: "size {\n"
+  "  x: 128.0\n"
+  "  y: 32.0\n"
+  "}\n"
+  "color {\n"
+  "  x: 0.302\n"
+  "  y: 0.302\n"
+  "  z: 0.302\n"
+  "}\n"
+  "text: \"X\"\n"
+  "font: \"/resources/game.font\"\n"
+  "material: \"/builtins/fonts/label-df.material\"\n"
+  ""
+  position {
+    y: 10.0
+    z: 0.1
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+}

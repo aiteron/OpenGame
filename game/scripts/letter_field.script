@@ -1,0 +1,27 @@
+local Letter = require("game.modules.field_letter")
+
+-- TODO: cover letter game objects to Letter class
+local function init_field(self, words)
+	self.letters = {}
+	self.word_map = {}
+
+	local center_pos = go.get_world_position(".")
+	local word_count = #words
+	for i, word in ipairs(words) do
+		local vshift = (i - 0.5 - word_count/2.0) * 78
+		local word_length = utf8.len(word)
+		self.word_map[word] = {}
+		for j = 1, word_length do
+			local letter = utf8.sub(word, j, j)
+			local hshift = (j - 0.5 - word_length/2.0) * 78
+			local letter_obj = factory.create("#letter_factory", vmath.vector3(center_pos.x + hshift, center_pos.y + vshift, center_pos.z))
+			table.insert(self.word_map[word], letter_obj)
+			table.insert(self.letters, letter_obj)
+			label.set_text(msg.url(nil, letter_obj, "label"), utf8.upper(letter))
+		end
+	end
+end
+
+function init(self)
+	init_field(self, {"козел", "волк", "вася", "холоп"})
+end

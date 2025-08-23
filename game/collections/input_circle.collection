@@ -1,0 +1,53 @@
+name: "input_circle"
+scale_along_z: 0
+embedded_instances {
+  id: "circle"
+  children: "letter_pos"
+  children: "word_pos"
+  data: "components {\n"
+  "  id: \"input_circle\"\n"
+  "  component: \"/game/scripts/input_circle.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"button_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/game_objects/input_circle_button.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"background\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"input_circle\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 294.0\\n"
+  "  y: 294.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/resources/game.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"letter_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/game_objects/word_letter.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "letter_pos"
+  data: ""
+  position {
+    y: 136.0
+  }
+}
+embedded_instances {
+  id: "word_pos"
+  data: ""
+  position {
+    y: 223.0
+  }
+}

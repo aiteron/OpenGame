@@ -1,0 +1,13 @@
+images {
+  image: "/assets/images/input_circle.png"
+}
+images {
+  image: "/assets/images/input_letter_bg.png"
+}
+images {
+  image: "/assets/images/input_letter_bg_selected.png"
+}
+images {
+  image: "/assets/images/cell_bg.png"
+}
+extrude_borders: 2

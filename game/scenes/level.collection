@@ -1,0 +1,26 @@
+name: "main"
+collection_instances {
+  id: "input_circle"
+  collection: "/game/collections/input_circle.collection"
+  position {
+    x: 320.0
+    y: 320.0
+  }
+}
+collection_instances {
+  id: "letter_field"
+  collection: "/game/collections/letter_field.collection"
+  position {
+    x: 320.0
+    y: 827.0
+  }
+}
+scale_along_z: 0
+embedded_instances {
+  id: "gui"
+  data: "components {\n"
+  "  id: \"level_gui\"\n"
+  "  component: \"/game/gui/level_gui.gui\"\n"
+  "}\n"
+  ""
+}

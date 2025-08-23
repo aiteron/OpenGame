@@ -1,0 +1,32 @@
+local function set_input_buttons(self, letters)
+	self.buttons = {}
+	
+	local count = #letters
+	local rotation_angle_shift = vmath.quat_rotation_z((math.pi*2)/count)
+	local center = go.get_world_position(".")
+	local pos = go.get_world_position("letter_pos") - center
+	for i = 1, count do
+		local button = factory.create("#button_factory", center + pos)
+		table.insert(self.buttons, {btn = button, letter = letters[i]})
+		label.set_text(msg.url(nil, button, "label"), letters[i])
+		pos = vmath.rotate(rotation_angle_shift, pos)
+	end
+end
+
+local function set_word_letters(self, letters)
+	self.word_objects = {}
+
+	local count = #letters
+	local center_pos = go.get_world_position("word_pos")
+	for i = 1, count do
+		local shift = (i - 0.5 - count/2.0) * 46
+		local letter_obj = factory.create("#letter_factory", vmath.vector3(center_pos.x + shift, center_pos.y, center_pos.z))
+		table.insert(self.word_objects, letter_obj)
+		label.set_text(msg.url(nil, letter_obj, "label"), letters[i])
+	end
+end
+
+function init(self)
+	set_input_buttons(self, {'У', 'Р', 'А', 'К', 'П'})
+	set_word_letters(self, {"К", "А", "Р", "П"})
+end
