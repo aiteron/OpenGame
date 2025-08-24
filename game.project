@@ -30,4 +30,6 @@ clear_color_blue = 0.29411766
 show_made_with_defold = 0
 show_console_banner = 0
 show_fullscreen_button = 0
+htmlfile = /html/game_template.html
+cssfile = /html/game_theme.css
 

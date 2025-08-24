@@ -1,7 +1,7 @@
 name: "main"
 collection_instances {
   id: "input_circle"
-  collection: "/game/collections/input_circle.collection"
+  collection: "/game/collections/input_zone.collection"
   position {
     x: 320.0
     y: 320.0
@@ -21,6 +21,14 @@ embedded_instances {
   data: "components {\n"
   "  id: \"level_gui\"\n"
   "  component: \"/game/gui/level_gui.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "manager"
+  data: "components {\n"
+  "  id: \"manager\"\n"
+  "  component: \"/game/scripts/manager.script\"\n"
   "}\n"
   ""
 }

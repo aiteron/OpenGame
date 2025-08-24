@@ -1,0 +1,41 @@
+local Level = require "game.game_logic.level"
+
+local function window_callback(self, event, data)
+	if event == window.WINDOW_EVENT_FOCUS_LOST then
+		--print("window.WINDOW_EVENT_FOCUS_LOST")
+	elseif event == window.WINDOW_EVENT_FOCUS_GAINED then
+		--print("window.WINDOW_EVENT_FOCUS_GAINED")
+	elseif event == window.WINDOW_EVENT_ICONFIED then
+		--print("window.WINDOW_EVENT_ICONFIED")
+	elseif event == window.WINDOW_EVENT_DEICONIFIED then
+		--print("window.WINDOW_EVENT_DEICONIFIED")
+	elseif event == window.WINDOW_EVENT_RESIZED then
+		--print("Window resized: ", data.width, data.height)
+		if html5 then
+			msg.post("#", "window_resize", { width = data.width, height = data.height })
+		end
+	end
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	window.set_listener(window_callback)
+
+	self.level = Level:new(1)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("window_resize") then
+		local ratio_current = message.width / message.height
+		local ratio_abs = 640/1136
+		local coeff = ratio_abs / ratio_current
+
+		self.level:on_window_resize(coeff)
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") then
+		self.level:on_input(action)
+	end
+end

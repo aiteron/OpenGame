@@ -10,4 +10,7 @@ images {
 images {
   image: "/assets/images/cell_bg.png"
 }
+images {
+  image: "/assets/images/cell_bg_selected.png"
+}
 extrude_borders: 2
