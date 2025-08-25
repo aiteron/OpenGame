@@ -37,8 +37,8 @@ end
 
 function M:load_level(level_num)
 	-- TODO: load from json
-	self.words = {"брат","араб","тара","бар","раб","бра"}
-	self.open_word_indexes = {}
+	self.words = {"минор","корм","кино","мир","ком","ион","ром","мор","рок","инок"}
+	self.opened_words_indexes = {}
 	
 	self.letter_zone = LettersZone:new(self, self.words)
 
@@ -51,14 +51,18 @@ function M:on_window_resize(coeff)
 	self.input_zone:on_window_resize(coeff)
 end
 
-function M:on_input(action)
-	self.input_zone:on_input(action)
+function M:on_input(id, action)
+	self.input_zone:on_input(id, action)
+end
+
+function M:update(dt)
+	self.input_zone:update(dt)
 end
 
 function M:enter_word(word)
 	for i, w in ipairs(self.words) do
-		if not self.open_word_indexes[i] and word == w then
-			self.open_word_indexes[i] = true
+		if not self.opened_words_indexes[i] and word == w then
+			self.opened_words_indexes[i] = true
 			self.letter_zone:show_word(word)
 		end
 	end

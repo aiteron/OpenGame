@@ -1,6 +1,5 @@
 local M = {}
 
-
 function M:set_cells()
 	for _, v in ipairs(self.letters) do
 		go.delete(v)
@@ -33,7 +32,7 @@ function M:update_scale()
 	local word_count = #self.words
 
 	local scale1 =  ((640 - 100) / self.xscale) / (self.max_word_len * 78)
-	local scale2 =  400 / (word_count * 78)
+	local scale2 =  450 / (word_count * 78)
 	local scale = math.min(scale1, scale2)
 	
 	local center_pos = go.get_world_position("/letter_field/letter_field")

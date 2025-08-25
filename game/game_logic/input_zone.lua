@@ -1,88 +1,73 @@
+local Spline = require "game.game_logic.spline"
+local LetterButton = require "game.game_logic.letter_button"
+local LetterWord = require "game.game_logic.letter_word"
+
 local M = {}
 
-function M:set_buttons()
-	for _, v in ipairs(self.buttons) do
-		go.delete(v.btn)
-	end
-	self.buttons = {}
-
-	local count = #self.letters
-	local rotation_angle_shift = vmath.quat_rotation_z((math.pi*2)/count)
-	local center = go.get_world_position("/input_circle/circle")
-	local pos = go.get_world_position("/input_circle/letter_pos") - center
-	for i = 1, count do
-		local button = factory.create("/input_circle/circle#button_factory", center + vmath.vector3(pos.x * self.xscale, pos.y, pos.z))
-		go.set_scale(vmath.vector3(self.xscale, 1.0, 1.0), button)
-		table.insert(self.buttons, {btn = button, letter = self.letters[i]})
-		label.set_text(msg.url(nil, button, "label"), utf8.upper(self.letters[i]))
-		pos = vmath.rotate(rotation_angle_shift, pos)
-	end
-end
-
-function M:set_word()
-	for _, v in ipairs(self.word_objs) do
-		go.delete(v)
-	end
-	self.word_objs = {}
-
-	local count = #self.entered_letters
-	local center_pos = go.get_world_position("/input_circle/word_pos")
-	for i = 1, count do
-		local shift = (i - 0.5 - count/2.0) * 46
-		local letter_obj = factory.create("/input_circle/circle#letter_factory", vmath.vector3(center_pos.x + shift*self.xscale, center_pos.y, center_pos.z))
-		go.set_scale(vmath.vector3(self.xscale, 1.0, 1.0), letter_obj)
-		table.insert(self.word_objs, letter_obj)
-		label.set_text(msg.url(nil, letter_obj, "label"), utf8.upper(self.entered_letters[i]))
-	end
-end
-
-function M:on_window_resize(coeff)
-	self.xscale = coeff
-	self:set_buttons()
-	self:set_word()
-	go.set_scale(vmath.vector3(coeff, 1.0, 1.0), "/input_circle/circle#background")
-end
-
-function M:update_buttons_color()
-	for i, data in ipairs(self.buttons) do
-		if self.selected_indexes[i] then
-			sprite.play_flipbook(msg.url(nil, data.btn, "sprite"), "input_letter_bg_selected")
-			go.set(msg.url(nil, data.btn, "label"), "color", vmath.vector4(1.0, 1.0, 1.0, 1.0))
-		else
-			sprite.play_flipbook(msg.url(nil, data.btn, "sprite"), "input_letter_bg")
-			go.set(msg.url(nil, data.btn, "label"), "color", vmath.vector4(77/255, 77/255, 77/255, 1.0))
+function M:get_selected_button(x, y)
+	for _, btn in ipairs(self.buttons) do
+		if btn:is_intersect(x, y) then
+			return btn
 		end
 	end
 end
 
-function M:on_input(action)
-	--pprint(action)
-	if action.pressed then
-		if not self.is_input then
-			self.is_input = true
-		end
-	elseif action.released then
-		if self.is_input then
-			if #self.entered_letters > 0 then
-				local str = table.concat(self.entered_letters)
-				self.level:enter_word(str)
+function M:on_input(id, action)
+	if id == hash("touch") then
+		if action.pressed then
+			-- Maybe problem if unclick not on the screen
+			if not self.input_action then
+				self.input_action = { selected = {}, current = nil, selected_list = {} }
 			end
-			self.is_input = false
-			self.selected_indexes = {}
-			self.entered_letters = {}
-			self:set_word()
-			self:update_buttons_color()
-		end
-	else
-		if self.is_input then
-			local point_vec = vmath.vector3(action.x, action.y, 0);
-			for i, data in ipairs(self.buttons) do
-				if not self.selected_indexes[i] then
-					if vmath.length(go.get_world_position(data.btn) - point_vec) < 55 then
-						self.selected_indexes[i] = true
-						table.insert(self.entered_letters, data.letter)
-						self:set_word()
-						self:update_buttons_color()
+		elseif action.released then
+			if self.input_action then
+				if #self.input_action.selected_list > 0 then
+					local tab = {}
+					for _, v in ipairs(self.input_action.selected_list) do
+						table.insert(tab, v.letter)
+					end
+					self.level:enter_word(table.concat(tab))
+				end
+				
+				for btn, _ in pairs(self.input_action.selected) do
+					btn:set_selected(false)
+				end
+				self.word:clear()
+				self.spline:clear_points()
+				self.input_action = { selected = {}, current = nil, selected_list = {} }
+			end
+		else
+			self.spline:update_mouse_point(action.x, action.y)
+
+			if self.input_action then
+				local button = self:get_selected_button(action.x, action.y)
+				if button then
+					if not self.input_action.selected[button] then
+						if not self.input_action.current then
+							self.word:add_letter(button.letter)
+							self.input_action.selected[button] = true
+							self.input_action.current = button
+							button:set_selected(true)
+							table.insert(self.input_action.selected_list, button)
+							local btn_pos = button:get_pos()
+							self.spline:add_point(btn_pos.x, btn_pos.y)
+						end
+					else
+						if not self.input_action.current then
+							local btn_list = self.input_action.selected_list
+							if button == btn_list[#btn_list-1] then
+								self.word:remove_letter()
+								self.input_action.selected[btn_list[#btn_list]] = nil
+								self.input_action.current = button
+								btn_list[#btn_list]:set_selected(false)
+								table.remove(btn_list, #btn_list)
+								self.spline:remove_point()
+							end
+						end
+					end
+				else
+					if self.input_action.current then
+						self.input_action.current = nil
 					end
 				end
 			end
@@ -90,23 +75,54 @@ function M:on_input(action)
 	end
 end
 
+function M:update(dt)
+	self.spline:render()
+end
+
+function M:init_buttons(letters)
+	self.buttons = {}
+	for i = 1, #letters do
+		local button = LetterButton:new(letters[i])
+		table.insert(self.buttons, button)
+	end
+end
+
+function M:on_window_resize(coeff)
+	self.xscale = coeff
+
+	-- update buttons pos, scale
+	local rotation_angle = vmath.quat_rotation_z((math.pi*2)/#self.buttons)
+	local center = go.get_world_position("/input_circle/circle")
+	local button_pos = go.get_world_position("/input_circle/letter_pos") - center
+	for _, btn in ipairs(self.buttons) do
+		btn:set_pos(center + vmath.vector3(button_pos.x * self.xscale, button_pos.y, button_pos.z))
+		btn:set_xscale(coeff)
+		button_pos = vmath.rotate(rotation_angle, button_pos)
+	end
+
+	-- update word
+	self.word:set_pos(go.get_world_position("/input_circle/word_pos"))
+	self.word:set_xscale(coeff)
+
+	-- update background circle
+	go.set_scale(vmath.vector3(coeff, 1.0, 1.0), "/input_circle/circle#background")
+end
+
 function M:new(level, letters)
 	local o = {}
 	setmetatable(o, self)
 	self.__index = self
 
+	o.input_active = false
+	
 	o.level = level
 	o.xscale = 1
-	
-	o.letters = letters
-	o.buttons = {}
-	o:set_buttons()
 
-	o.is_input = false
-	o.entered_letters = {}
-	o.selected_indexes = {}
-	o.word_objs = {}
-	o:set_word()
+	o.spline = Spline:new()
+	o.word = LetterWord:new()
+	
+	o:init_buttons(letters)
+	o:on_window_resize(o.xscale)
 	
 	return o
 end

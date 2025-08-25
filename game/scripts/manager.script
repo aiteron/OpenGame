@@ -34,8 +34,10 @@ function on_message(self, message_id, message, sender)
 	end
 end
 
+function update(self, dt)
+	self.level:update(dt)
+end
+
 function on_input(self, action_id, action)
-	if action_id == hash("touch") then
-		self.level:on_input(action)
-	end
+	self.level:on_input(action_id, action)
 end

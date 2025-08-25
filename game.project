@@ -17,6 +17,7 @@ input_method = HiddenInputField
 title = OpenGame
 version = 0.1
 dependencies#0 = https://github.com/d954mas/defold-utf8/archive/master.zip
+dependencies#1 = https://github.com/AGulev/drawpixels/archive/refs/tags/2.0.3.zip
 
 [input]
 game_binding = /configs/game.input_bindingc
