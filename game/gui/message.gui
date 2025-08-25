@@ -1,0 +1,145 @@
+script: "/game/gui_scripts/message.gui_script"
+fonts {
+  name: "game"
+  font: "/resources/game.font"
+}
+textures {
+  name: "game"
+  texture: "/resources/game.atlas"
+}
+nodes {
+  position {
+    x: 320.0
+    y: 568.0
+    z: -0.5
+  }
+  scale {
+    x: 640.0
+    y: 1136.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "game/pixel"
+  id: "shadow"
+  inherit_alpha: true
+  alpha: 0.64
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 320.0
+    y: 540.0
+  }
+  type: TYPE_BOX
+  texture: "game/message_bg"
+  id: "bg"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: 176.0
+  }
+  type: TYPE_BOX
+  texture: "game/popup_ribbon"
+  id: "ribbon"
+  parent: "bg"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: -43.0
+  }
+  scale {
+    x: 1.3
+    y: 1.3
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "\320\224\320\262\320\265 \320\262\320\272\320\273\320\260\320\264\320\272\320\270\n"
+  "\321\201 \320\270\320\263\321\200\320\276\320\271?\n"
+  ""
+  font: "game"
+  id: "title"
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_S
+  line_break: true
+  parent: "ribbon"
+  inherit_alpha: true
+  text_leading: 0.5
+}
+nodes {
+  position {
+    y: -81.0
+  }
+  scale {
+    x: 1.1
+    y: 1.1
+  }
+  size {
+    x: 600.0
+    y: 100.0
+  }
+  color {
+    x: 0.302
+    y: 0.302
+    z: 0.302
+  }
+  type: TYPE_TEXT
+  text: "\320\237\320\276\321\205\320\276\320\266\320\265, \320\270\320\263\321\200\320\260 \320\276\321\202\320\272\321\200\321\213\321\202\320\260 \320\262\n"
+  "\320\275\320\265\321\201\320\272\320\276\320\273\321\214\320\272\320\270\321\205 \320\262\320\272\320\273\320\260\320\264\320\272\320\260\321\205 \320\261\321\200\320\260\321\203\320\267\320\265\321\200\320\260.\n"
+  "\320\247\321\202\320\276\320\261\321\213 \320\277\321\200\320\276\320\264\320\276\320\273\320\266\320\270\321\202\321\214 \320\270\320\263\321\200\320\260\321\202\321\214 \320\262 \n"
+  "\321\215\321\202\320\276\320\271 \320\262\320\272\320\273\320\260\320\264\320\272\320\265, \320\276\320\261\320\275\320\276\320\262\320\270\321\202\320\265\n"
+  "\321\201\321\202\321\200\320\260\320\275\320\270\321\206\321\203."
+  font: "game"
+  id: "message"
+  yanchor: YANCHOR_TOP
+  pivot: PIVOT_S
+  line_break: true
+  parent: "bg"
+  inherit_alpha: true
+  text_leading: 0.5
+}
+nodes {
+  position {
+    y: -146.0
+  }
+  type: TYPE_BOX
+  texture: "game/bt_green"
+  id: "button"
+  parent: "bg"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: 9.0
+  }
+  scale {
+    x: 1.333333
+    y: 1.333333
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "\320\236\320\261\320\275\320\276\320\262\320\270\321\202\321\214\n"
+  ""
+  font: "game"
+  id: "btn_text"
+  yanchor: YANCHOR_TOP
+  parent: "button"
+  inherit_alpha: true
+  text_leading: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

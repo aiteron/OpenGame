@@ -16,4 +16,13 @@ images {
 images {
   image: "/assets/images/bt_green.png"
 }
+images {
+  image: "/assets/images/popup_ribbon.png"
+}
+images {
+  image: "/assets/images/message_bg.png"
+}
+images {
+  image: "/assets/images/pixel.png"
+}
 extrude_borders: 2

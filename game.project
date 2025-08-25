@@ -20,6 +20,7 @@ custom_resources = /assets/level_data
 dependencies#0 = https://github.com/d954mas/defold-utf8/archive/master.zip
 dependencies#1 = https://github.com/AGulev/drawpixels/archive/refs/tags/2.0.3.zip
 dependencies#2 = https://github.com/britzl/monarch/archive/master.zip
+dependencies#3 = https://github.com/AGulev/jstodef/archive/refs/tags/3.0.0.zip
 
 [input]
 game_binding = /configs/game.input_bindingc

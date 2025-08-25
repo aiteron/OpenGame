@@ -107,6 +107,47 @@
         window.addEventListener('resize', resize_game_canvas, false);
         window.addEventListener('orientationchange', resize_game_canvas, false);
         window.addEventListener('focus', resize_game_canvas, false);
+
+
+        // Tab check
+        var timePageLastUpdate;
+        var _openPageTime;
+        var _is_have_another_tab = false;
+
+        function bindPageTabCheck() {
+            try {
+                timePageLastUpdate = Date.now();
+
+                _openPageTime = timePageLastUpdate;
+                localStorage.last_open_time = timePageLastUpdate;
+                localStorage.openpages = timePageLastUpdate;
+
+                var onLocalStorageEvent = function(e) {
+                    JsToDef.send("_local_storage_event", "changed");
+                };
+                window.addEventListener('storage', onLocalStorageEvent, false);
+            } catch (e) {
+                console.warn("Cant bind for page tab check")
+            }
+        }
+
+        function reloadCurrentPage() {
+            location.reload()
+        }
+
+        function checkHaveAnotherTab() {
+            try {
+                _is_have_another_tab = timePageLastUpdate != localStorage.last_open_time;
+                timePageLastUpdate = Date.now();
+                localStorage.last_open_time = timePageLastUpdate;
+            } catch (e) {
+                console.warn("cant recieve state");
+            }
+
+            return _is_have_another_tab;
+        }
+
+        bindPageTabCheck();
 	</script>
 	<script id='engine-start' type='text/javascript'>
 		var runningFromFileWarning = document.getElementById("running-from-file-warning");

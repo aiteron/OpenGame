@@ -1,0 +1,28 @@
+local monarch = require "monarch.monarch"
+
+function init(self)
+    msg.post(".", "acquire_input_focus")
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+    if action_id == hash("touch") and action.pressed then
+        local button = gui.get_node("button")
+        if gui.pick_node(button, action.x, action.y) then
+            if html5 then
+                html5.run("reloadCurrentPage()")
+            end
+        end
+    end
+end
+
+function on_reload(self)
+end

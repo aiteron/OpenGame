@@ -1,10 +1,23 @@
 local monarch = require "monarch.monarch"
 local GlobalState = require "game.game_logic.global_state"
 
+local function js_listener(self, message_id, message)
+	if message_id == "_local_storage_event" then
+		local res = html5.run("checkHaveAnotherTab()")
+		if res then
+			msg.post("#", "message_popup")
+		end
+	end
+end
+
 function init(self)
+	if jstodef then
+		jstodef.add_listener(js_listener)
+	end
+	
 	msg.post(".", "acquire_input_focus")
 	msg.post("#", "level")
-
+	
 	GlobalState:load()
 end
 
@@ -13,5 +26,7 @@ function on_message(self, message_id, message, sender)
 		monarch.show(hash("level"), { clear = true })
 	elseif message_id == hash("win") then
 		monarch.show(hash("win"), { clear = true })
+	elseif message_id == hash("message_popup") then
+		monarch.show(hash("message"))
 	end
 end
