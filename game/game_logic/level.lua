@@ -1,5 +1,6 @@
 local LettersZone = require "game.game_logic.letters_zone"
 local InputZone = require "game.game_logic.input_zone"
+local GlobalState = require "game.game_logic.global_state"
 
 local M = {}
 
@@ -59,8 +60,16 @@ function M:load_level(level_num)
 
 	self.opened_words_indexes = {}
 	self.opened_word_count = 0
-	
+
 	self.letter_zone = LettersZone:new(self, self.words)
+
+	for i, w in ipairs(self.words) do
+		if GlobalState.words[w] then
+			self.opened_words_indexes[i] = true
+			self.opened_word_count = self.opened_word_count + 1
+			self.letter_zone:show_word(w)
+		end
+	end
 
 	self.letters = self:get_letters(self.words)
 	self.input_zone = InputZone:new(self, self.letters)
@@ -91,6 +100,8 @@ function M:enter_word(word)
 			self.opened_words_indexes[i] = true
 			self.opened_word_count = self.opened_word_count + 1
 			self.letter_zone:show_word(word)
+			GlobalState.words[word] = true
+			GlobalState:save()
 			self:check_win()
 		end
 	end

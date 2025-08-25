@@ -5,7 +5,7 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	msg.post("#", "level")
 
-	GlobalState:loadSave()
+	GlobalState:load()
 end
 
 function on_message(self, message_id, message, sender)
