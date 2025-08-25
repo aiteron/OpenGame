@@ -20,7 +20,7 @@ embedded_instances {
   id: "gui"
   data: "components {\n"
   "  id: \"level_gui\"\n"
-  "  component: \"/game/gui/level_gui.gui\"\n"
+  "  component: \"/game/gui/level.gui\"\n"
   "}\n"
   ""
 }

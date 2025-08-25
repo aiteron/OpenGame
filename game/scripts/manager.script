@@ -1,16 +1,9 @@
+local monarch = require "monarch.monarch"
 local Level = require "game.game_logic.level"
+local GlobalState = require "game.game_logic.global_state"
 
 local function window_callback(self, event, data)
-	if event == window.WINDOW_EVENT_FOCUS_LOST then
-		--print("window.WINDOW_EVENT_FOCUS_LOST")
-	elseif event == window.WINDOW_EVENT_FOCUS_GAINED then
-		--print("window.WINDOW_EVENT_FOCUS_GAINED")
-	elseif event == window.WINDOW_EVENT_ICONFIED then
-		--print("window.WINDOW_EVENT_ICONFIED")
-	elseif event == window.WINDOW_EVENT_DEICONIFIED then
-		--print("window.WINDOW_EVENT_DEICONIFIED")
-	elseif event == window.WINDOW_EVENT_RESIZED then
-		--print("Window resized: ", data.width, data.height)
+	if event == window.WINDOW_EVENT_RESIZED then
 		if html5 then
 			msg.post("#", "window_resize", { width = data.width, height = data.height })
 		end
@@ -21,7 +14,8 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	window.set_listener(window_callback)
 
-	self.level = Level:new(1)
+	self.level = Level:new(GlobalState.level)
+	msg.post("/gui#level_gui", "update_label", {level = GlobalState.level})
 end
 
 function on_message(self, message_id, message, sender)

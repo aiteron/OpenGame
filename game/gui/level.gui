@@ -1,3 +1,4 @@
+script: "/game/gui_scripts/level.gui_script"
 fonts {
   name: "game"
   font: "/resources/game.font"
@@ -14,7 +15,7 @@ nodes {
   type: TYPE_TEXT
   text: "\320\243\321\200\320\276\320\262\320\265\320\275\321\214 N"
   font: "game"
-  id: "text"
+  id: "level_label"
   yanchor: YANCHOR_TOP
   pivot: PIVOT_N
   inherit_alpha: true

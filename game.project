@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /game/scenes/level.collectionc
+main_collection = /game/scenes/_entry_point.collectionc
 
 [script]
 shared_state = 1
@@ -16,8 +16,10 @@ input_method = HiddenInputField
 [project]
 title = OpenGame
 version = 0.1
+custom_resources = /assets/level_data
 dependencies#0 = https://github.com/d954mas/defold-utf8/archive/master.zip
 dependencies#1 = https://github.com/AGulev/drawpixels/archive/refs/tags/2.0.3.zip
+dependencies#2 = https://github.com/britzl/monarch/archive/master.zip
 
 [input]
 game_binding = /configs/game.input_bindingc

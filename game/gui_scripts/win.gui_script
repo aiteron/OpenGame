@@ -1,0 +1,30 @@
+local monarch = require "monarch.monarch"
+local GlobalState = require "game.game_logic.global_state"
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	gui.set_text(gui.get_node("level"), "Уровень " .. GlobalState.level .. " пройден")
+	gui.set_text(gui.get_node("btn_text"), "Уровень " .. GlobalState.level + 1)
+end
+
+function final(self)
+end
+
+function update(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") and action.pressed then
+		local button = gui.get_node("button")
+		if gui.pick_node(button, action.x, action.y) then
+			GlobalState:increase_level()
+			msg.post("_entry_point:/manager#script", "level")
+		end
+	end
+end
+
+function on_reload(self)
+end

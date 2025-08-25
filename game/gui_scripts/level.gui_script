@@ -1,0 +1,5 @@
+function on_message(self, message_id, message, sender)
+	if message_id == hash("update_label") then
+		gui.set_text(gui.get_node("level_label"), "Уровень " .. message.level)
+	end
+end

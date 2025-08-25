@@ -35,10 +35,30 @@ function M:get_letters(words)
 	return letters
 end
 
+function M:load_words(level_num)
+	local data_index = (level_num-1)%3 + 1
+
+	local file_path = "/assets/level_data/" .. data_index .. ".json"
+	local content = sys.load_resource(file_path)
+	if content then
+		local success, data = pcall(json.decode, content)
+		if success then
+			return data.words
+		else
+			print("JSON parse error (" .. file_path .. "): " .. data)
+		end
+	else
+		print("Load json file error: " .. file_path)
+	end
+	return {"error"}
+end
+
 function M:load_level(level_num)
-	-- TODO: load from json
-	self.words = {"минор","корм","кино","мир","ком","ион","ром","мор","рок","инок"}
+	self.words = self:load_words(level_num)
+	table.sort(self.words, function(a, b) return utf8.len(a) > utf8.len(b) end)
+
 	self.opened_words_indexes = {}
+	self.opened_word_count = 0
 	
 	self.letter_zone = LettersZone:new(self, self.words)
 
@@ -59,11 +79,19 @@ function M:update(dt)
 	self.input_zone:update(dt)
 end
 
+function M:check_win()
+	if self.opened_word_count == #self.words then
+		msg.post("_entry_point:/manager#script", "win")
+	end
+end
+
 function M:enter_word(word)
 	for i, w in ipairs(self.words) do
 		if not self.opened_words_indexes[i] and word == w then
 			self.opened_words_indexes[i] = true
+			self.opened_word_count = self.opened_word_count + 1
 			self.letter_zone:show_word(word)
+			self:check_win()
 		end
 	end
 end
