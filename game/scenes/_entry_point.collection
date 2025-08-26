@@ -12,7 +12,7 @@ embedded_instances {
   "  }\n"
   "  properties {\n"
   "    id: \"preload\"\n"
-  "    value: \"true\"\n"
+  "    value: \"false\"\n"
   "    type: PROPERTY_TYPE_BOOLEAN\n"
   "  }\n"
   "}\n"
