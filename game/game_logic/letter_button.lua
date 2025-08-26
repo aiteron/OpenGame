@@ -16,7 +16,7 @@ end
 function M:is_intersect(x, y)
 	local pos = go.get_world_position(self.id)
 	local point = vmath.vector3(x, y, 0)
-	return vmath.length(pos - point) < 50
+	return vmath.length(pos - point) < 45
 end
 
 function M:set_selected(val)

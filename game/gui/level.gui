@@ -18,6 +18,7 @@ nodes {
   id: "level_label"
   yanchor: YANCHOR_TOP
   pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_ZOOM
   inherit_alpha: true
   text_leading: 0.0
 }

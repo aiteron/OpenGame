@@ -9,21 +9,27 @@ local function window_callback(self, event, data)
 	end
 end
 
+
+local function on_window_resize(self, width, height)
+	local ratio_current = width / height
+	local ratio_abs = 640/1136
+	local coeff = ratio_abs / ratio_current
+
+	self.level:on_window_resize(coeff)
+end
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	window.set_listener(window_callback)
 
 	self.level = Level:new(GlobalState.level)
 	msg.post("/gui#level_gui", "update_label", {level = GlobalState.level})
+	on_window_resize(self, window.get_size())
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("window_resize") then
-		local ratio_current = message.width / message.height
-		local ratio_abs = 640/1136
-		local coeff = ratio_abs / ratio_current
-
-		self.level:on_window_resize(coeff)
+		on_window_resize(self, message.width, message.height)
 	end
 end
 

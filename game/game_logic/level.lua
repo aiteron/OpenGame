@@ -70,6 +70,7 @@ function M:load_level(level_num)
 			self.letter_zone:show_word(w)
 		end
 	end
+	self:check_win()
 
 	self.letters = self:get_letters(self.words)
 	self.input_zone = InputZone:new(self, self.letters)

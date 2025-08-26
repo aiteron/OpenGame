@@ -10,46 +10,6 @@ textures {
 nodes {
   position {
     x: 320.0
-    y: 802.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-  }
-  type: TYPE_TEXT
-  text: "\320\243\321\200\320\276\320\262\320\265\320\275\321\214 N \320\277\321\200\320\276\320\271\320\264\320\265\320\275"
-  font: "game"
-  id: "level"
-  yanchor: YANCHOR_TOP
-  pivot: PIVOT_S
-  inherit_alpha: true
-  text_leading: 0.0
-}
-nodes {
-  position {
-    x: 320.0
-    y: 834.0
-  }
-  scale {
-    x: 1.4
-    y: 1.4
-  }
-  size {
-    x: 200.0
-    y: 100.0
-  }
-  type: TYPE_TEXT
-  text: "\320\230\320\267\321\203\320\274\320\270\321\202\320\265\320\273\321\214\320\275\320\276!"
-  font: "game"
-  id: "congrats"
-  yanchor: YANCHOR_TOP
-  pivot: PIVOT_N
-  inherit_alpha: true
-  text_leading: 0.0
-}
-nodes {
-  position {
-    x: 320.0
     y: 366.0
   }
   type: TYPE_BOX
@@ -76,6 +36,57 @@ nodes {
   id: "btn_text"
   yanchor: YANCHOR_TOP
   parent: "button"
+  inherit_alpha: true
+  text_leading: 0.0
+}
+nodes {
+  position {
+    x: 320.0
+    y: 857.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "text_pos"
+  yanchor: YANCHOR_TOP
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "\320\243\321\200\320\276\320\262\320\265\320\275\321\214 N \320\277\321\200\320\276\320\271\320\264\320\265\320\275"
+  font: "game"
+  id: "level"
+  pivot: PIVOT_N
+  parent: "text_pos"
+  inherit_alpha: true
+  text_leading: 0.0
+}
+nodes {
+  position {
+    y: -31.0
+  }
+  scale {
+    x: 1.4
+    y: 1.4
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "\320\230\320\267\321\203\320\274\320\270\321\202\320\265\320\273\321\214\320\275\320\276!"
+  font: "game"
+  id: "congrats"
+  pivot: PIVOT_N
+  parent: "text_pos"
   inherit_alpha: true
   text_leading: 0.0
 }
