@@ -37,3 +37,6 @@ show_fullscreen_button = 0
 htmlfile = /html/game_template.html
 cssfile = /html/game_theme.css
 
+[graphics]
+texture_profiles = /configs/game.texture_profiles
+
