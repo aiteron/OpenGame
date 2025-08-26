@@ -25,6 +25,7 @@ nodes {
   type: TYPE_BOX
   texture: "game/pixel"
   id: "shadow"
+  adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
   alpha: 0.64
   size_mode: SIZE_MODE_AUTO
