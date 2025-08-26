@@ -1,4 +1,3 @@
-local monarch = require "monarch.monarch"
 local Level = require "game.game_logic.level"
 local GlobalState = require "game.game_logic.global_state"
 

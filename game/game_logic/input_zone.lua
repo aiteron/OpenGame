@@ -15,7 +15,6 @@ end
 function M:on_input(id, action)
 	if id == hash("touch") then
 		if action.pressed then
-			-- Maybe problem if unclick not on the screen
 			if not self.input_action then
 				self.input_action = { selected = {}, current = nil, selected_list = {} }
 			end
